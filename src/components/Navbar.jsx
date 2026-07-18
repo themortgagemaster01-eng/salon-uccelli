@@ -20,10 +20,10 @@ export default function Navbar() {
         scrolled ? 'glass border-x-0 border-t-0 rounded-none' : 'border-b border-transparent'
       }`}
     >
-      <div className="bg-gradient-to-b from-goldbright to-gold text-ink text-center py-[7px] px-4">
+      <div className="bg-gradient-to-b from-goldbright to-gold text-cream text-center py-[7px] px-4">
         <p className="font-label text-[10px] sm:text-[11px] uppercase tracking-widest">
           Demo site built by{' '}
-          <a href="https://obsidianlabshq.io" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-ink/70">
+          <a href="https://obsidianlabshq.io" target="_blank" rel="noopener noreferrer" className="underline font-semibold hover:text-cream/70">
             Obsidian Labs
           </a>
         </p>

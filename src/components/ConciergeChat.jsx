@@ -65,7 +65,7 @@ export default function ConciergeChat() {
                     'px-3.5 py-2.5 rounded-xl text-sm leading-relaxed max-w-[86%] ' +
                     (m.who === 'bot'
                       ? 'bg-panel self-start rounded-bl-[3px] text-cream/90'
-                      : 'bg-gold self-end rounded-br-[3px] text-ink')
+                      : 'bg-gold self-end rounded-br-[3px] text-cream')
                   }
                 >
                   {m.text}
@@ -92,7 +92,7 @@ export default function ConciergeChat() {
         aria-label={open ? 'Close concierge chat' : 'Open concierge chat'}
         className="w-[60px] h-[60px] rounded-full bg-gradient-to-b from-goldbright to-gold flex items-center justify-center shadow-[0_10px_34px_rgba(201,162,75,0.4)] transition-transform hover:scale-105"
       >
-        {open ? <X size={26} className="text-ink" /> : <MessageCircle size={26} className="text-ink" />}
+        {open ? <X size={26} className="text-cream" /> : <MessageCircle size={26} className="text-cream" />}
       </button>
     </div>
   )
