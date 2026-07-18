@@ -4,14 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#141110',
-        ink2: '#1b1715',
-        panel: '#211c19',
-        line: 'rgba(242,236,224,.12)',
-        gold: '#c9a24b',
-        goldbright: '#e0c079',
-        cream: '#f2ece0',
-        muted: '#a99e91',
+        ink: '#f7f2e7',
+        ink2: '#efe6d3',
+        panel: '#faf6ec',
+        line: 'rgba(58,71,53,.14)',
+        gold: '#b58a3f',
+        goldbright: '#d1aa5c',
+        cream: '#2b3328',
+        muted: '#6e7a64',
+        sage: '#7c9473',
+        sagebright: '#9fb496',
       },
       fontFamily: {
         display: ['Anton', 'sans-serif'],
