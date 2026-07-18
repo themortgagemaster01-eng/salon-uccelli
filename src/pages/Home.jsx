@@ -1,0 +1,219 @@
+import { Link } from 'react-router-dom'
+import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from 'framer-motion'
+import { ArrowRight, Scissors, Sparkles, ShieldCheck, Wallet, DoorOpen, Gift, Quote, MapPin, Star } from 'lucide-react'
+import Page from '../components/Page.jsx'
+import Reveal from '../components/Reveal.jsx'
+import SectionHeading from '../components/SectionHeading.jsx'
+import FAQ from '../components/FAQ.jsx'
+import Seo from '../components/Seo.jsx'
+import TiltCard from '../components/TiltCard.jsx'
+import ReviewsCarousel from '../components/ReviewsCarousel.jsx'
+import BookingWidget from '../components/BookingWidget.jsx'
+import { shop, services, perks, reviews, reviewsArePlaceholder, googleRating } from '../data/site.js'
+
+const perkIcons = { shield: ShieldCheck, wallet: Wallet, door: DoorOpen, gift: Gift }
+
+export default function Home() {
+  const featured = services.slice(0, 4)
+
+  const reduceMotion = useReducedMotion()
+  const px = useMotionValue(0.5)
+  const py = useMotionValue(0.5)
+  const heroX = useSpring(useTransform(px, [0, 1], [-14, 14]), { stiffness: 60, damping: 20 })
+  const heroY = useSpring(useTransform(py, [0, 1], [-10, 10]), { stiffness: 60, damping: 20 })
+  const handleHeroMove = (e) => {
+    if (reduceMotion) return
+    px.set(e.clientX / window.innerWidth)
+    py.set(e.clientY / window.innerHeight)
+  }
+
+  return (
+    <Page>
+      <Seo title="Salon Uccelli — Mahopac, NY" description="Full-service hair color, cutting, and styling in Mahopac, NY since 2002. Book with Karen, Stephanie, or Lee." />
+
+      {/* ================= HERO ================= */}
+      <section className="relative min-h-screen flex flex-col justify-end overflow-hidden" onMouseMove={handleHeroMove}>
+        <motion.div className="absolute inset-0" style={reduceMotion ? undefined : { x: heroX, y: heroY, scale: 1.06 }}>
+          <img
+            src={`${import.meta.env.BASE_URL}hero-salon.jpg`}
+            alt="Salon Uccelli interior"
+            className="h-full w-full object-cover contrast-[1.05] saturate-[1.08] brightness-[0.9]"
+          />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(20,17,16,.55) 0%, rgba(20,17,16,.15) 38%, rgba(20,17,16,.82) 100%), linear-gradient(90deg, rgba(20,17,16,.78) 0%, rgba(20,17,16,.28) 46%, rgba(20,17,16,0) 100%)' }} />
+          <div className="absolute inset-0 hero-sweep" aria-hidden="true" />
+        </motion.div>
+
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-36">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}>
+            <div className="eyebrow mb-5 flex items-center gap-3">
+              <span className="w-7 h-px bg-gold" /> Mahopac, NY · Since 2002
+            </div>
+            <h1 className="font-display uppercase leading-[0.85] drop-shadow-[0_2px_30px_rgba(0,0,0,0.6)]">
+              <span className="block text-cream text-[15vw] sm:text-[10vw] lg:text-[7rem]">SALON</span>
+              <span className="block text-gold text-[13vw] sm:text-[9vw] lg:text-[6.2rem] mt-1">UCCELLI</span>
+            </h1>
+            <p className="mt-6 font-serif text-2xl sm:text-3xl max-w-xl">{shop.tagline}</p>
+            <p className="mt-4 text-muted max-w-md leading-relaxed">Color, cutting, and styling from a team Mahopac has trusted for over two decades.</p>
+
+            <div className="mt-9 flex flex-wrap items-center gap-4">
+              <a href={shop.phoneHref} className="btn-gold hover:-translate-y-0.5">Book Now <ArrowRight size={18} /></a>
+              <Link to="/services" className="btn-ghost">Our Services <ArrowRight size={18} /></Link>
+            </div>
+
+            <div className="mt-14 flex gap-10 sm:gap-14">
+              {[
+                { Icon: Sparkles, a: 'Color', b: 'Specialists' },
+                { Icon: Scissors, a: 'Expert', b: 'Stylists' },
+                { Icon: ShieldCheck, a: 'Trusted', b: 'Since 2002' },
+              ].map(({ Icon, a, b }, i) => (
+                <div key={i} className="text-center">
+                  <Icon size={30} className="mx-auto mb-2.5 text-gold" />
+                  <p className="font-label text-[11px] uppercase tracking-widest text-muted leading-tight">{a}<br />{b}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= TRUST BAR ================= */}
+      <section className="bg-ink2 border-y border-line">
+        <div className="mx-auto max-w-4xl px-6 py-6 flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-center">
+          <div className="flex items-center gap-2">
+            <Star className="text-gold fill-gold" size={18} />
+            <span className="font-label uppercase tracking-wide text-sm text-cream">{googleRating.stars.toFixed(1)} Google Rating</span>
+          </div>
+          <span className="hidden sm:block w-px h-4 bg-line" />
+          <div className="flex items-center gap-2">
+            <Quote className="text-gold" size={16} />
+            <span className="font-label uppercase tracking-wide text-sm text-cream">{googleRating.count} Reviews</span>
+          </div>
+          <span className="hidden sm:block w-px h-4 bg-line" />
+          <div className="flex items-center gap-2">
+            <MapPin className="text-gold" size={16} />
+            <span className="font-label uppercase tracking-wide text-sm text-cream">Trusted In Mahopac Since 2002</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= BOOKING WIDGET ================= */}
+      <section className="mx-auto max-w-6xl px-6 py-24">
+        <SectionHeading eyebrow="Skip The Wait" title="Book In Seconds" align="center" />
+        <Reveal delay={0.1} className="mt-12">
+          <BookingWidget />
+        </Reveal>
+      </section>
+
+      {/* ================= INTRO STRIP ================= */}
+      <section className="bg-ink2 border-y border-line">
+        <div className="mx-auto max-w-4xl px-6 py-16 text-center">
+          <Reveal>
+            <Quote className="mx-auto text-gold mb-5" size={34} />
+            <p className="font-serif text-2xl sm:text-3xl leading-snug">{shop.vision}</p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ================= SERVICES ================= */}
+      <section className="mx-auto max-w-6xl px-6 py-24 border-t border-line">
+        <SectionHeading eyebrow="The Craft" title="What We Do" sub={shop.intro} />
+        <div className="mt-14 grid gap-px bg-line border border-line sm:grid-cols-2 lg:grid-cols-4">
+          {featured.map((s, i) => (
+            <Reveal key={s.name} delay={i * 0.08}>
+              <TiltCard maxTilt={4} className="h-full bg-ink2 transition-colors hover:bg-panel group overflow-hidden">
+                {s.img && (
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={`${import.meta.env.BASE_URL}${s.img}`}
+                      alt={s.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(20,17,16,0) 55%, rgba(20,17,16,.85) 100%)' }} />
+                    <Scissors className="absolute top-3 left-3 text-gold drop-shadow" size={22} />
+                  </div>
+                )}
+                <div className="p-8">
+                  <h3 className="font-label font-bold uppercase tracking-wide text-lg">{s.name}</h3>
+                  <p className="mt-2 text-muted text-sm leading-relaxed">{s.blurb}</p>
+                </div>
+              </TiltCard>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal delay={0.1} className="mt-10">
+          <Link to="/services" className="btn-ghost">All Services <ArrowRight size={18} /></Link>
+        </Reveal>
+      </section>
+
+      {/* ================= PERKS ================= */}
+      <section className="bg-ink2 border-y border-line">
+        <div className="mx-auto max-w-6xl px-6 py-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {perks.map((p, i) => {
+            const Icon = perkIcons[p.icon]
+            return (
+              <Reveal key={p.label} delay={i * 0.06}>
+                <div className="flex items-center gap-4 bg-panel border border-line rounded-sm p-5 h-full transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_8px_24px_rgba(0,0,0,.3)]">
+                  <Icon className="text-gold shrink-0" size={26} />
+                  <span className="font-label uppercase tracking-wide text-sm">{p.label}</span>
+                </div>
+              </Reveal>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* ================= REVIEWS ================= */}
+      <section className="mx-auto max-w-6xl px-6 py-24">
+        <SectionHeading eyebrow="From Our Clients" title="Client Reviews" align="center" />
+        {reviewsArePlaceholder && (
+          <p className="mt-4 text-center text-xs text-muted/70 italic">
+            Placeholder content — real Google reviews embed here once connected.
+          </p>
+        )}
+        <Reveal delay={0.1} className="mt-12">
+          <ReviewsCarousel reviews={reviews} />
+        </Reveal>
+      </section>
+
+      {/* ================= FAQ ================= */}
+      <FAQ />
+
+      {/* ================= CTA ================= */}
+      <section className="relative overflow-hidden">
+        <div className="mx-auto max-w-4xl px-6 py-24 text-center">
+          <Reveal>
+            <h2 className="font-display uppercase text-4xl sm:text-6xl leading-none">Ready For A New Look?</h2>
+            <p className="mt-5 text-muted max-w-lg mx-auto">Call ahead to lock in your stylist, or walk in during shop hours.</p>
+            <div className="mt-9 flex flex-wrap justify-center gap-4">
+              <a href={shop.phoneHref} className="btn-gold hover:-translate-y-0.5">Call {shop.phone}</a>
+              <Link to="/contact" className="btn-ghost">Find The Salon <ArrowRight size={18} /></Link>
+            </div>
+          </Reveal>
+        </div>
+        <div className="barber-rule" />
+      </section>
+
+      {/* ================= FIND US ================= */}
+      <section className="bg-ink2 border-t border-line">
+        <div className="mx-auto max-w-4xl px-6 py-20">
+          <SectionHeading eyebrow="Right On Route 6" title="Find Us" align="center" />
+          <Reveal delay={0.1} className="mt-10">
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(shop.address)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center justify-between gap-4 glass rounded-md p-6"
+            >
+              <div className="flex items-center gap-3">
+                <MapPin className="text-gold shrink-0" size={22} />
+                <span className="text-cream">{shop.address}</span>
+              </div>
+              <span className="font-label uppercase tracking-wide text-xs text-gold shrink-0">Get Directions →</span>
+            </a>
+          </Reveal>
+        </div>
+      </section>
+    </Page>
+  )
+}
